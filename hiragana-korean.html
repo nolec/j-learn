@@ -1,0 +1,663 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>히라가나 정리 (한글 읽기 포함)</title>
+    <style>
+      :root {
+        --bg: #0b1020;
+        --card: rgba(255, 255, 255, 0.06);
+        --card-2: rgba(255, 255, 255, 0.09);
+        --text: rgba(255, 255, 255, 0.92);
+        --muted: rgba(255, 255, 255, 0.7);
+        --muted-2: rgba(255, 255, 255, 0.55);
+        --border: rgba(255, 255, 255, 0.12);
+        --accent: #7c5cff;
+        --accent-2: #4fd1c5;
+        --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        font-family:
+          ui-sans-serif,
+          system-ui,
+          -apple-system,
+          Segoe UI,
+          Roboto,
+          "Noto Sans KR",
+          Arial,
+          "Apple SD Gothic Neo",
+          "Malgun Gothic",
+          sans-serif;
+        color: var(--text);
+        background:
+          radial-gradient(
+            1200px 600px at 20% 0%,
+            rgba(124, 92, 255, 0.25),
+            transparent 55%
+          ),
+          radial-gradient(
+            900px 500px at 90% 20%,
+            rgba(79, 209, 197, 0.18),
+            transparent 55%
+          ),
+          radial-gradient(
+            900px 500px at 50% 100%,
+            rgba(124, 92, 255, 0.12),
+            transparent 50%
+          ),
+          var(--bg);
+      }
+      a {
+        color: inherit;
+      }
+
+      .container {
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 28px 18px 56px;
+      }
+
+      header {
+        display: flex;
+        gap: 16px;
+        align-items: flex-start;
+        justify-content: space-between;
+        margin-bottom: 18px;
+      }
+      .title-wrap {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      h1 {
+        font-size: 22px;
+        letter-spacing: -0.02em;
+        margin: 0;
+        line-height: 1.2;
+      }
+      .subtitle {
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.5;
+      }
+
+      .toolbar {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+      }
+
+      .input {
+        width: min(360px, 80vw);
+        padding: 10px 12px;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.06);
+        color: var(--text);
+        outline: none;
+        box-shadow: none;
+      }
+      .input::placeholder {
+        color: rgba(255, 255, 255, 0.55);
+      }
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 10px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--muted);
+        font-size: 12px;
+        user-select: none;
+      }
+      .chip strong {
+        color: var(--text);
+        font-weight: 700;
+      }
+
+      .grid {
+        display: grid;
+        gap: 14px;
+      }
+      @media (min-width: 900px) {
+        .grid {
+          grid-template-columns: 1fr 1fr;
+          align-items: start;
+        }
+      }
+
+      section {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        box-shadow: var(--shadow);
+        overflow: hidden;
+      }
+
+      .section-header {
+        padding: 14px 14px 10px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 12px;
+      }
+      h2 {
+        margin: 0;
+        font-size: 15px;
+        letter-spacing: -0.01em;
+      }
+      .count {
+        color: var(--muted-2);
+        font-size: 12px;
+      }
+
+      .rows {
+        padding: 12px;
+        display: grid;
+        gap: 12px;
+      }
+      .row {
+        border-radius: 14px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        background: rgba(255, 255, 255, 0.04);
+        overflow: hidden;
+      }
+      .row-title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 12px;
+        gap: 12px;
+        background: rgba(255, 255, 255, 0.03);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      }
+      .row-title .name {
+        font-weight: 700;
+        letter-spacing: -0.01em;
+        font-size: 13px;
+      }
+      .row-title .hint {
+        color: var(--muted-2);
+        font-size: 12px;
+      }
+      .cells {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 10px;
+        padding: 10px;
+      }
+      @media (max-width: 520px) {
+        .cells {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+      }
+      .cell {
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(0, 0, 0, 0.08);
+        border-radius: 14px;
+        padding: 10px 10px 9px;
+        display: grid;
+        gap: 6px;
+        min-height: 68px;
+      }
+      .cell .kana {
+        font-size: 22px;
+        font-weight: 800;
+        letter-spacing: 0.01em;
+        line-height: 1;
+      }
+      .cell .ko {
+        font-size: 13px;
+        color: var(--muted);
+        line-height: 1.2;
+      }
+      .cell .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-top: 2px;
+      }
+      .tag {
+        font-size: 11px;
+        color: rgba(255, 255, 255, 0.75);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(255, 255, 255, 0.06);
+        padding: 3px 7px;
+        border-radius: 999px;
+      }
+      .tag.accent {
+        border-color: rgba(124, 92, 255, 0.55);
+        background: rgba(124, 92, 255, 0.14);
+      }
+      .tag.teal {
+        border-color: rgba(79, 209, 197, 0.5);
+        background: rgba(79, 209, 197, 0.12);
+      }
+
+      .notes {
+        padding: 12px 14px 14px;
+        display: grid;
+        gap: 10px;
+      }
+      .note {
+        border-radius: 14px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        background: rgba(255, 255, 255, 0.03);
+        padding: 12px;
+        line-height: 1.6;
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .note strong {
+        color: var(--text);
+      }
+      .kbd {
+        display: inline-flex;
+        align-items: center;
+        padding: 2px 6px;
+        border-radius: 6px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(255, 255, 255, 0.05);
+        font-family:
+          ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+          "Liberation Mono", monospace;
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.82);
+      }
+
+      footer {
+        margin-top: 18px;
+        color: var(--muted-2);
+        font-size: 12px;
+        line-height: 1.6;
+        text-align: center;
+      }
+
+      @media print {
+        body {
+          background: white;
+          color: #111;
+        }
+        section {
+          box-shadow: none;
+          border: 1px solid #ddd;
+          background: white;
+        }
+        .cell {
+          background: white;
+          border: 1px solid #e5e5e5;
+        }
+        .subtitle,
+        .chip,
+        footer {
+          color: #555 !important;
+        }
+        .input {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="title-wrap">
+          <h1>히라가나 정리 (한글 읽기 포함)</h1>
+          <p class="subtitle">
+            여행 준비용으로 “빠르게 읽기”에 초점을 맞춘 정리입니다. 검색창에
+            <span class="kbd">あ</span> / <span class="kbd">카</span> /
+            <span class="kbd">し</span> 같은 글자를 넣으면 필터링됩니다.
+          </p>
+        </div>
+        <div class="toolbar">
+          <input
+            id="search"
+            class="input"
+            type="search"
+            placeholder="검색: 예) し / 시 / 츠 / ん"
+          />
+          <span class="chip"><strong id="visibleCount">0</strong>개 표시</span>
+        </div>
+      </header>
+
+      <div class="grid">
+        <section>
+          <div class="section-header">
+            <h2>기본 46자</h2>
+            <span class="count" id="baseCount"></span>
+          </div>
+          <div class="rows" id="baseRows"></div>
+        </section>
+
+        <section>
+          <div class="section-header">
+            <h2>탁음/반탁음</h2>
+            <span class="count" id="dakutenCount"></span>
+          </div>
+          <div class="rows" id="dakutenRows"></div>
+
+          <div class="section-header">
+            <h2>발음 주의(한글 표기는 “가까운 발음”)</h2>
+            <span class="count">여행 회화에서 자주 헷갈리는 포인트</span>
+          </div>
+          <div class="notes">
+            <div class="note">
+              <strong>し</strong>는 보통 “시”로 적지만 실제로는 “쉬”에 가까울
+              때가 많아요.
+            </div>
+            <div class="note">
+              <strong>つ</strong>는 “츠”. 끝에 ‘ㅅ’ 느낌이 살짝 남는 경우가
+              있어요.
+            </div>
+            <div class="note">
+              <strong>ふ</strong>는 “후”로 적지만 입모양이 ‘후/푸’ 중간
+              느낌이에요.
+            </div>
+            <div class="note">
+              <strong>ん</strong>은 뒤 글자에 따라 “응/ㄴ/ㅁ”처럼 들릴 수
+              있어요. (예: こん=콘, さん=산)
+            </div>
+            <div class="note">
+              <strong>を</strong>는 요즘 대부분 조사로 쓰고 “오”로 읽는 경우가
+              많아요.
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <footer>
+        팁: 하루 1시간 기준으로 “행(あ행, か행…) 단위로 외우기 → 랜덤 퀴즈(짧게
+        자주) → 단어 읽기” 순서가 가장 빨라요.
+      </footer>
+    </div>
+
+    <script>
+      const base = [
+        {
+          title: "あ행",
+          hint: "아/이/우/에/오",
+          items: [
+            { kana: "あ", ko: "아" },
+            { kana: "い", ko: "이" },
+            { kana: "う", ko: "우" },
+            { kana: "え", ko: "에" },
+            { kana: "お", ko: "오" },
+          ],
+        },
+        {
+          title: "か행",
+          hint: "카/키/쿠/케/코",
+          items: [
+            { kana: "か", ko: "카" },
+            { kana: "き", ko: "키" },
+            { kana: "く", ko: "쿠" },
+            { kana: "け", ko: "케" },
+            { kana: "こ", ko: "코" },
+          ],
+        },
+        {
+          title: "さ행",
+          hint: "사/시/스/세/소",
+          items: [
+            { kana: "さ", ko: "사" },
+            { kana: "し", ko: "시", tags: ["주의"] },
+            { kana: "す", ko: "스" },
+            { kana: "せ", ko: "세" },
+            { kana: "そ", ko: "소" },
+          ],
+        },
+        {
+          title: "た행",
+          hint: "타/치/츠/테/토",
+          items: [
+            { kana: "た", ko: "타" },
+            { kana: "ち", ko: "치" },
+            { kana: "つ", ko: "츠", tags: ["주의"] },
+            { kana: "て", ko: "테" },
+            { kana: "と", ko: "토" },
+          ],
+        },
+        {
+          title: "な행",
+          hint: "나/니/누/네/노",
+          items: [
+            { kana: "な", ko: "나" },
+            { kana: "に", ko: "니" },
+            { kana: "ぬ", ko: "누" },
+            { kana: "ね", ko: "네" },
+            { kana: "の", ko: "노" },
+          ],
+        },
+        {
+          title: "は행",
+          hint: "하/히/후/헤/호",
+          items: [
+            { kana: "は", ko: "하" },
+            { kana: "ひ", ko: "히" },
+            { kana: "ふ", ko: "후", tags: ["주의"] },
+            { kana: "へ", ko: "헤" },
+            { kana: "ほ", ko: "호" },
+          ],
+        },
+        {
+          title: "ま행",
+          hint: "마/미/무/메/모",
+          items: [
+            { kana: "ま", ko: "마" },
+            { kana: "み", ko: "미" },
+            { kana: "む", ko: "무" },
+            { kana: "め", ko: "메" },
+            { kana: "も", ko: "모" },
+          ],
+        },
+        {
+          title: "や행",
+          hint: "야/유/요",
+          items: [
+            { kana: "や", ko: "야" },
+            { kana: "ゆ", ko: "유" },
+            { kana: "よ", ko: "요" },
+          ],
+        },
+        {
+          title: "ら행",
+          hint: "라/리/루/레/로",
+          items: [
+            { kana: "ら", ko: "라" },
+            { kana: "り", ko: "리" },
+            { kana: "る", ko: "루" },
+            { kana: "れ", ko: "레" },
+            { kana: "ろ", ko: "로" },
+          ],
+        },
+        {
+          title: "わ행",
+          hint: "와/오/응(ㄴ)",
+          items: [
+            { kana: "わ", ko: "와" },
+            { kana: "を", ko: "오", tags: ["주의"] },
+            { kana: "ん", ko: "응/ㄴ", tags: ["주의"] },
+          ],
+        },
+      ];
+
+      const dakuten = [
+        {
+          title: "が행",
+          hint: "가/기/구/게/고",
+          items: [
+            { kana: "が", ko: "가", tags: ["탁음"] },
+            { kana: "ぎ", ko: "기", tags: ["탁음"] },
+            { kana: "ぐ", ko: "구", tags: ["탁음"] },
+            { kana: "げ", ko: "게", tags: ["탁음"] },
+            { kana: "ご", ko: "고", tags: ["탁음"] },
+          ],
+        },
+        {
+          title: "ざ행",
+          hint: "자/지/즈/제/조",
+          items: [
+            { kana: "ざ", ko: "자", tags: ["탁음"] },
+            { kana: "じ", ko: "지", tags: ["탁음"] },
+            { kana: "ず", ko: "즈", tags: ["탁음"] },
+            { kana: "ぜ", ko: "제", tags: ["탁음"] },
+            { kana: "ぞ", ko: "조", tags: ["탁음"] },
+          ],
+        },
+        {
+          title: "だ행",
+          hint: "다/지/즈/데/도",
+          items: [
+            { kana: "だ", ko: "다", tags: ["탁음"] },
+            { kana: "ぢ", ko: "지", tags: ["탁음"] },
+            { kana: "づ", ko: "즈", tags: ["탁음"] },
+            { kana: "で", ko: "데", tags: ["탁음"] },
+            { kana: "ど", ko: "도", tags: ["탁음"] },
+          ],
+        },
+        {
+          title: "ば행",
+          hint: "바/비/부/베/보",
+          items: [
+            { kana: "ば", ko: "바", tags: ["탁음"] },
+            { kana: "び", ko: "비", tags: ["탁음"] },
+            { kana: "ぶ", ko: "부", tags: ["탁음"] },
+            { kana: "べ", ko: "베", tags: ["탁음"] },
+            { kana: "ぼ", ko: "보", tags: ["탁음"] },
+          ],
+        },
+        {
+          title: "ぱ행",
+          hint: "파/피/푸/페/포",
+          items: [
+            { kana: "ぱ", ko: "파", tags: ["반탁음"] },
+            { kana: "ぴ", ko: "피", tags: ["반탁음"] },
+            { kana: "ぷ", ko: "푸", tags: ["반탁음"] },
+            { kana: "ぺ", ko: "페", tags: ["반탁음"] },
+            { kana: "ぽ", ko: "포", tags: ["반탁음"] },
+          ],
+        },
+      ];
+
+      function normalize(s) {
+        return String(s || "")
+          .trim()
+          .toLowerCase();
+      }
+
+      function createCell(item) {
+        const div = document.createElement("div");
+        div.className = "cell";
+        div.dataset.kana = item.kana;
+        div.dataset.ko = item.ko;
+        div.dataset.tags = (item.tags || []).join(",");
+
+        const kana = document.createElement("div");
+        kana.className = "kana";
+        kana.textContent = item.kana;
+
+        const ko = document.createElement("div");
+        ko.className = "ko";
+        ko.textContent = item.ko;
+
+        div.appendChild(kana);
+        div.appendChild(ko);
+
+        if (item.tags && item.tags.length) {
+          const tags = document.createElement("div");
+          tags.className = "tags";
+          for (const t of item.tags) {
+            const span = document.createElement("span");
+            span.className = "tag";
+            if (t === "주의") span.classList.add("accent");
+            if (t === "반탁음") span.classList.add("teal");
+            span.textContent = t;
+            tags.appendChild(span);
+          }
+          div.appendChild(tags);
+        }
+        return div;
+      }
+
+      function renderRows(root, groups) {
+        root.innerHTML = "";
+        let total = 0;
+        for (const g of groups) {
+          const row = document.createElement("div");
+          row.className = "row";
+          row.dataset.groupTitle = g.title;
+
+          const title = document.createElement("div");
+          title.className = "row-title";
+          title.innerHTML = `<div class="name">${g.title}</div><div class="hint">${g.hint}</div>`;
+
+          const cells = document.createElement("div");
+          cells.className = "cells";
+          for (const item of g.items) {
+            cells.appendChild(createCell(item));
+            total += 1;
+          }
+
+          row.appendChild(title);
+          row.appendChild(cells);
+          root.appendChild(row);
+        }
+        return total;
+      }
+
+      function applyFilter(query) {
+        const q = normalize(query);
+        const cells = document.querySelectorAll(".cell");
+        let visible = 0;
+
+        for (const cell of cells) {
+          const hay = normalize(
+            [cell.dataset.kana, cell.dataset.ko, cell.dataset.tags].join(" ")
+          );
+          const match = !q || hay.includes(q);
+          cell.style.display = match ? "" : "none";
+          if (match) visible += 1;
+        }
+
+        // 행 전체가 비면 숨김
+        const rows = document.querySelectorAll(".row");
+        for (const row of rows) {
+          const anyVisible = Array.from(row.querySelectorAll(".cell")).some(
+            (c) => c.style.display !== "none"
+          );
+          row.style.display = anyVisible ? "" : "none";
+        }
+
+        document.getElementById("visibleCount").textContent = visible;
+      }
+
+      const baseTotal = renderRows(document.getElementById("baseRows"), base);
+      const dakutenTotal = renderRows(
+        document.getElementById("dakutenRows"),
+        dakuten
+      );
+      document.getElementById("baseCount").textContent = `${baseTotal}개`;
+      document.getElementById("dakutenCount").textContent = `${dakutenTotal}개`;
+
+      const search = document.getElementById("search");
+      search.addEventListener("input", (e) => applyFilter(e.target.value));
+      applyFilter("");
+    </script>
+  </body>
+</html>

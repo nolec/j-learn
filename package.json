@@ -1,0 +1,26 @@
+{
+  "name": "j-learn",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "predev": "node scripts/copy-hiragana-html.mjs",
+    "dev": "next dev",
+    "prebuild": "node scripts/copy-hiragana-html.mjs",
+    "build": "next build",
+    "prestart": "node scripts/copy-hiragana-html.mjs",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "^15.5.7",
+    "react": "^19.1.2",
+    "react-dom": "^19.1.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "typescript": "^5"
+  }
+}
+
+
