@@ -3,11 +3,11 @@
   "private": true,
   "version": "0.1.0",
   "scripts": {
-    "predev": "node scripts/copy-hiragana-html.mjs",
+    "predev": "node scripts/copy-hiragana-html.mjs && node scripts/copy-katakana-html.mjs",
     "dev": "next dev",
-    "prebuild": "node scripts/copy-hiragana-html.mjs",
+    "prebuild": "node scripts/copy-hiragana-html.mjs && node scripts/copy-katakana-html.mjs",
     "build": "next build",
-    "prestart": "node scripts/copy-hiragana-html.mjs",
+    "prestart": "node scripts/copy-hiragana-html.mjs && node scripts/copy-katakana-html.mjs",
     "start": "next start"
   },
   "dependencies": {

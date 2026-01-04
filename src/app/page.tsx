@@ -11,6 +11,9 @@ export default function HomePage() {
         <li>
           <Link href="/hiragana">히라가나 정리(한글 읽기 포함)</Link>
         </li>
+        <li>
+          <Link href="/katakana">가타카나 정리(한글 읽기 포함)</Link>
+        </li>
       </ul>
     </main>
   );
